@@ -13,6 +13,7 @@ include(cmake/CPM.cmake)
 
 # Install additional packages using CPM
 CPMAddPackage("gh:zeux/pugixml@1.14")
+CPMAddPackage("gh:niklasbhv/sdf-cpp-core@0.1.2")
 
 # Include the "include" directory for public headers
 include_directories(include)
@@ -34,7 +35,7 @@ target_include_directories(${PROJECT_NAME}
 )
 
 # Link additional libraries
-target_link_libraries(${PROJECT_NAME} PRIVATE pugixml::pugixml)
+target_link_libraries(${PROJECT_NAME} PUBLIC pugixml::pugixml sdf_cpp_core)
 
 # Set properties (versioning and compatibility)
 set_target_properties(${PROJECT_NAME} PROPERTIES
@@ -53,15 +54,6 @@ install(TARGETS ${PROJECT_NAME}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}    # For static libraries (.a)
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}    # For executables on Windows (.dll)
         PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/lwm2m_cpp_edge
-)
-
-# Install the pugixml target
-install(TARGETS pugixml
-        EXPORT lwm2m_cpp_edge_targets
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pugixml
 )
 
 # Install the export configuration for other CMake projects to use this library
