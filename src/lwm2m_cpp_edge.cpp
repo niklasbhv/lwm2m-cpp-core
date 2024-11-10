@@ -66,6 +66,10 @@ Resource Resource::Parse(const pugi::xml_node& resource_node) {
         resource.type = Time;
     } else if (type == "Objlnk") {
         resource.type = ObjectLink;
+    } else if (type == "Unsigned Integer") {
+        resource.type = UnsignedInteger;
+    } else if (type == "Corelnk") {
+        resource.type = CoreLink;
     } else {
         resource.type = UndefinedType;
     }
