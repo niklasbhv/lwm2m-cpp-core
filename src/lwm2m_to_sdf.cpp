@@ -36,8 +36,80 @@ static sdf::ReferenceTreeNode* current_given_name_node = nullptr;
 //! This list gets filled while mapping and afterward appended to the corresponding sdfModel
 static std::list<std::string> sdf_required_list;
 
-void MapLwm2mResource(const lwm2m::Resource& lwm2m_resource, sdf::SdfObject& lwm2m_object) {
+void MapLwm2mResource(const lwm2m::Resource& lwm2m_resource, sdf::SdfObject& sdf_object) {
+    // Append a new sdfObject node to the tree
+    auto* lwm2m_resource_reference = new sdf::ReferenceTreeNode(lwm2m_resource.name);
+    current_quality_name_node->AddChild(lwm2m_resource_reference);
+    current_given_name_node = lwm2m_resource_reference;
 
+    if (lwm2m_resource.operations == lwm2m::Execute) {
+        // In this case the resource gets mapped to a sdfAction
+        sdf::SdfAction sdf_action;
+
+        current_given_name_node->AddAttribute("ID", lwm2m_resource.id);
+        sdf_action.label = lwm2m_resource.name;
+        // multiple_instances
+        if (lwm2m_resource.mandatory) {
+            sdf_required_list.push_back(current_given_name_node->GeneratePointer());
+        }
+        sdf_action.description = lwm2m_resource.description;
+
+        sdf_object.sdf_action[lwm2m_resource.name] = sdf_action;
+    } else if (lwm2m_resource.operations != lwm2m::UndefinedOperation) {
+        // In this case, the operations are either R, W or RW and thus get mapped to a sdfProperty
+        sdf::SdfProperty sdf_property;
+
+        sdf_property.label = lwm2m_resource.name;
+        if (lwm2m_resource.operations == lwm2m::Read) {
+            sdf_property.readable = true;
+            sdf_property.writable = false;
+        } else if (lwm2m_resource.operations == lwm2m::Write) {
+            sdf_property.readable = false;
+            sdf_property.writable = true;
+        } else {
+            sdf_property.readable = true;
+            sdf_property.writable = true;
+        }
+        // multiple_instances
+        if (lwm2m_resource.mandatory) {
+            sdf_required_list.push_back(current_given_name_node->GeneratePointer());
+        }
+        switch (lwm2m_resource.type) {
+            case lwm2m::String:
+                sdf_property.type = "string";
+                break;
+            case lwm2m::Integer:
+                sdf_property.type = "integer";
+                break;
+            case lwm2m::Float:
+                sdf_property.type = "number";
+                break;
+            case lwm2m::Boolean:
+                sdf_property.type = "boolean";
+                break;
+            case lwm2m::Opaque:
+                break;
+            case lwm2m::Time:
+                break;
+            case lwm2m::ObjectLink:
+                break;
+            case lwm2m::UnsignedInteger:
+                sdf_property.type = "integer";
+                break;
+            case lwm2m::CoreLink:
+                break;
+            case lwm2m::UndefinedType:
+                // An undefined type is unsupported
+                break;
+        }
+        // range enumeration
+        sdf_property.unit = lwm2m_resource.units;
+        sdf_property.description = lwm2m_resource.description;
+
+        sdf_object.sdf_property[lwm2m_resource.name] = sdf_property;
+    } else {
+        // Otherwise the operations are undefined
+    }
 }
 
 sdf::SdfObject MapLwm2mObject(const lwm2m::Object& lwm2m_object) {
