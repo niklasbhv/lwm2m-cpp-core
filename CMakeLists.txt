@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22.1)
-project(lwm2m_cpp_core VERSION 0.1.0 LANGUAGES CXX)
+project(lwm2m_cpp_edge VERSION 0.1.0 LANGUAGES CXX)
 
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 17)
@@ -19,7 +19,9 @@ include_directories(include)
 
 # Add the library target from source files
 add_library(${PROJECT_NAME}
-        ../src/lwm2m_cpp_core.cpp)
+        src/lwm2m_cpp_edge.cpp
+        src/sdf_to_lwm2m.cpp
+        src/lwm2m_to_sdf.cpp)
 
 # Optionally, specify whether to build as a shared or static library
 # set(BUILD_SHARED_LIBS ON)
@@ -46,16 +48,16 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 # Install library target
 install(TARGETS ${PROJECT_NAME}
-        EXPORT lwm2m_cpp_core_targets
+        EXPORT lwm2m_cpp_edge_targets
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}    # For shared libraries (.so/.dylib)
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}    # For static libraries (.a)
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}    # For executables on Windows (.dll)
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/lwm2m_cpp_core
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/lwm2m_cpp_edge
 )
 
 # Install the pugixml target
 install(TARGETS pugixml
-        EXPORT lwm2m_cpp_core_targets
+        EXPORT lwm2m_cpp_edge_targets
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -63,13 +65,13 @@ install(TARGETS pugixml
 )
 
 # Install the export configuration for other CMake projects to use this library
-install(EXPORT lwm2m_cpp_core_targets
-        FILE lwm2m_cpp_core_targets.cmake
+install(EXPORT lwm2m_cpp_edge_targets
+        FILE lwm2m_cpp_edge_targets.cmake
         NAMESPACE lwm2m::
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/lwm2m_cpp_core
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/lwm2m_cpp_edge
 )
 
 # Install public headers
-install(DIRECTORY include/lwm2m_cpp_core
+install(DIRECTORY include/lwm2m_cpp_edge
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )

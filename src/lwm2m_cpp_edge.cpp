@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-#include "lwm2m/lwm2m_cpp_core.h"
+#include "lwm2m/lwm2m_cpp_edge.h"
 #include <pugixml.hpp>
 
 namespace lwm2m {

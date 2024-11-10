@@ -14,8 +14,8 @@
  *  limitations under the License.
  */
 
-#ifndef LWM2M_CPP_CORE_INCLUDE_LWM2M_LWM2M_CPP_CORE_H_
-#define LWM2M_CPP_CORE_INCLUDE_LWM2M_LWM2M_CPP_CORE_H_
+#ifndef LWM2M_CPP_CORE_INCLUDE_LWM2M_LWM2M_CPP_EDGE_H_
+#define LWM2M_CPP_CORE_INCLUDE_LWM2M_LWM2M_CPP_EDGE_H_
 
 #include <string>
 #include <map>
@@ -75,4 +75,4 @@ struct Object {
 
 }
 
-#endif //LWM2M_CPP_CORE_INCLUDE_LWM2M_LWM2M_CPP_CORE_H_
+#endif //LWM2M_CPP_CORE_INCLUDE_LWM2M_LWM2M_CPP_EDGE_H_
