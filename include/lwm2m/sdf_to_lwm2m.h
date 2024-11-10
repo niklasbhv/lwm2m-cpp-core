@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-#ifndef LWM2M_CPP_CORE_SRC_SDF_TO_LWM2M_H_
-#define LWM2M_CPP_CORE_SRC_SDF_TO_LWM2M_H_
+#ifndef LWM2M_CPP_EDGE_SRC_SDF_TO_LWM2M_H_
+#define LWM2M_CPP_EDGE_SRC_SDF_TO_LWM2M_H_
 
-#endif //LWM2M_CPP_CORE_SRC_SDF_TO_LWM2M_H_
+#endif //LWM2M_CPP_EDGE_SRC_SDF_TO_LWM2M_H_

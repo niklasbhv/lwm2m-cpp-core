@@ -14,7 +14,28 @@
  *  limitations under the License.
  */
 
-#ifndef LWM2M_CPP_CORE_SRC_LWM2M_TO_SDF_H_
-#define LWM2M_CPP_CORE_SRC_LWM2M_TO_SDF_H_
+/**
+ * @file
+ * @author Niklas Meyer <nik_mey@uni-bremen.de>
+ *
+ * @section Description
+ *
+ * Functions that convert LwM2M definitions to the Semantic Definition Format.
+ */
 
-#endif //LWM2M_CPP_CORE_SRC_LWM2M_TO_SDF_H_
+#ifndef LWM2M_CPP_EDGE_SRC_LWM2M_TO_SDF_H_
+#define LWM2M_CPP_EDGE_SRC_LWM2M_TO_SDF_H_
+
+#include <sdf/sdf_cpp_core.h>
+#include "lwm2m_cpp_edge.h"
+
+//! @brief Map a LwM2M definition definition to a SDF model as well as a SDF mapping.
+//!
+//! This function a LwM2M definition definition to a SDF model as well as a SDF mapping.
+//!
+//! @param lwm2m The input LwM2M definition.
+//! @param sdf_model The resulting SDF model.
+//! @param sdf_mapping The resulting SDF mapping.
+void MapLwm2mToSdf(const lwm2m::Lwm2m& lwm2m, sdf::SdfModel& sdf_model, sdf::SdfMapping& sdf_mapping);
+
+#endif //LWM2M_CPP_EDGE_SRC_LWM2M_TO_SDF_H_

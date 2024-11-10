@@ -22,6 +22,7 @@ namespace lwm2m {
 Resource Resource::Parse(const pugi::xml_node& resource_node) {
     Resource resource;
 
+    resource.id = resource_node.attribute("ID").as_int();
     resource.name = resource_node.child("Name").value();
 
     std::string operation = resource_node.child("Operations").value();
@@ -112,7 +113,7 @@ Object Object::Parse(const pugi::xml_node& object_node) {
     }
 
     for (const auto child_node : object_node.child("Resource").children()) {
-        object.resources[child_node.attribute("ID").as_int()] = Resource::Parse(child_node);
+        object.resources.push_back(Resource::Parse(child_node));
     }
 
     return object;

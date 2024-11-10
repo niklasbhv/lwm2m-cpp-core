@@ -19,6 +19,7 @@
 
 #include <string>
 #include <map>
+#include <list>
 #include <pugixml.hpp>
 
 namespace lwm2m {
@@ -45,6 +46,7 @@ enum Operations {
 };
 
 struct Resource {
+    int id;
     std::string name;
     Operations operations;
     bool multiple_instances;
@@ -69,11 +71,13 @@ struct Object {
     float object_version;
     bool multiple_instances;
     bool mandatory;
-    std::map<int, Resource> resources;
+    std::list<Resource> resources;
 
     static Object Parse(const pugi::xml_node& object_node);
     void Serialize();
 };
+
+typedef std::list<lwm2m::Object> Lwm2m;
 
 }
 
