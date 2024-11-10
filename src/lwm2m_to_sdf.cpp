@@ -57,7 +57,9 @@ sdf::SdfObject MapLwm2mObject(const lwm2m::Object& lwm2m_object) {
     lwm2m_object_reference->AddAttribute("ObjectURN", lwm2m_object.object_urn);
     lwm2m_object_reference->AddAttribute("LWM2MVersion", lwm2m_object.lwm2m_version);
     lwm2m_object_reference->AddAttribute("ObjectVersion", lwm2m_object.object_version);
-    // multiple_instances
+    if (!lwm2m_object.multiple_instances) {
+        sdf_object.max_items = 1;
+    }
     if (lwm2m_object.mandatory) {
         sdf_required_list.push_back(current_given_name_node->GeneratePointer());
     }
