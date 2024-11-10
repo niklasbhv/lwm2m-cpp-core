@@ -19,8 +19,8 @@
 #include "lwm2m/lwm2m_to_sdf.h"
 #include "lwm2m/lwm2m_cpp_edge.h"
 
-constexpr std::string_view LWM2M_SDF_NS = "https://onedm.org/ecosystem/oma";
-constexpr std::string_view LWM2M_NS_PREFIX = "oma";
+const std::basic_string<char> LWM2M_SDF_NS = "https://onedm.org/ecosystem/oma";
+const std::basic_string<char> LWM2M_NS_PREFIX = "oma";
 
 //! This is a global pointer to the quality name current node
 //! This is designed to point at the top level sdf element like
@@ -72,6 +72,8 @@ sdf::SdfObject MapLwm2mObject(const lwm2m::Object& lwm2m_object) {
 
 sdf::NamespaceBlock GenerateNamespaceBlock() {
     sdf::NamespaceBlock namespace_block;
+    namespace_block.namespaces[LWM2M_NS_PREFIX] = LWM2M_SDF_NS;
+    namespace_block.default_namespace = LWM2M_NS_PREFIX;
     return namespace_block;
 }
 
@@ -81,6 +83,14 @@ sdf::InformationBlock GenerateInformationBlock() {
 }
 
 void MapLwm2mToSdf(const lwm2m::Lwm2m& lwm2m, sdf::SdfModel& sdf_model, sdf::SdfMapping& sdf_mapping) {
+    // Generate the information block for the SDF model and mapping
+    sdf_model.information_block = GenerateInformationBlock();
+    sdf_mapping.information_block = GenerateInformationBlock();
+
+    // Generate the namespace block for the SDF model and mapping
+    sdf_model.namespace_block = GenerateNamespaceBlock();
+    sdf_mapping.namespace_block = GenerateNamespaceBlock();
+
     // Create a new ReferenceTree
     sdf::ReferenceTree reference_tree;
     // If the LwM2M definition contains multiple objects, the resulting SDF model contains a sdfThing with multiple
